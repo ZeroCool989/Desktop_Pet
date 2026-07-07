@@ -8,7 +8,8 @@ const SettingsSchema = z.object({
   y: z.number().int().optional(),
   quietStart: z.number().int().min(0).max(23).default(22),
   quietEnd: z.number().int().min(0).max(23).default(8),
-  userName: z.string().min(1).max(60).default('Almir'),
+  /** Empty until the first-run prompt asks the user for their name. */
+  userName: z.string().trim().max(60).default(''),
   /** Occasional tough-love pep talks while tasks are open. */
   motivation: z.boolean().default(true)
 })

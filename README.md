@@ -4,7 +4,11 @@ A black panther that lives on your desktop in a small transparent,
 always-on-top window, tracks your to-do list, and nags you **out loud, by
 name** when tasks are overdue.
 
-> "Almir, you still have 'finish the client deck' and 'gym' to finish."
+> "Alex, you still have 'finish the client deck' and 'gym' to finish."
+
+On first launch the panther asks for your name and remembers it — that's the
+name it uses when it talks to you. You can change it later in the settings
+file (see below).
 
 ## Stack
 
@@ -42,11 +46,11 @@ walk clip and facing the direction of travel. Nags play the run clip.
   once per task per 45 min). Finishing everything overdue earns you one
   short praise line.
 - **Tray menu**: Open tasks · Mute 1 hour · Mute today · Quit.
-- **Quiet hours** default to 22:00–08:00. Configure in
-  `~/Library/Application Support/panther/settings.json` (macOS) or
+- **Quiet hours** default to 22:00–08:00. Quiet hours and your name are
+  stored in `~/Library/Application Support/panther/settings.json` (macOS) or
   `%APPDATA%/panther/settings.json` (Windows):
   ```json
-  { "quietStart": 22, "quietEnd": 8, "userName": "Almir" }
+  { "quietStart": 22, "quietEnd": 8, "userName": "Alex" }
   ```
 
 ## Voice

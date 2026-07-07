@@ -97,6 +97,12 @@ body,
   color: #fff;
 }
 
+.name-intro {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #c9c9d6;
+}
+
 .task-input {
   width: 100%;
   resize: none;

@@ -51,6 +51,9 @@ export interface PantherApi {
    * is the display model and animation clips are merged across all of them.
    */
   readModels(): Promise<ModelFile[]>
+  /** Empty string until the user has been asked for their name (first run). */
+  getUserName(): Promise<string>
+  setUserName(name: string): Promise<void>
   onNag(cb: (e: NagEvent) => void): () => void
   onTogglePopover(cb: () => void): () => void
   onCursor(cb: (e: CursorEvent) => void): () => void
@@ -67,6 +70,8 @@ export const IPC = {
   dragMove: 'drag:move',
   dragEnd: 'drag:end',
   modelRead: 'model:read',
+  settingsGetUserName: 'settings:get-user-name',
+  settingsSetUserName: 'settings:set-user-name',
   evNag: 'panther:nag',
   evTogglePopover: 'popover:toggle',
   evCursor: 'cursor:pos',

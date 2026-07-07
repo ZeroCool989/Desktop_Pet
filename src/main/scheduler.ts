@@ -68,15 +68,17 @@ export class Scheduler {
     const s = loadSettings()
     if (isQuietHours(new Date(now), s.quietStart, s.quietEnd)) return
 
+    // Before the first-run prompt has captured a name, fall back to "friend".
+    const name = s.userName || 'friend'
     const due = selectNaggable(tasksRepo.overdue(now), now, NAG_COOLDOWN_MS)
     if (due.length === 0) {
-      this.maybeMotivate(now, s.userName, s.motivation)
+      this.maybeMotivate(now, name, s.motivation)
       return
     }
 
     const level = escalationLevel(due)
     const line = buildNagLine(
-      s.userName,
+      name,
       due.map((t) => t.title),
       level,
       this.rotation++,
@@ -106,7 +108,7 @@ export class Scheduler {
     if (tasksRepo.countOverdue(Date.now()) > 0) return
     this.naggedSinceClear = false
     if (this.muted) return
-    this.deliver(buildPraiseLine(loadSettings().userName, this.rotation++))
+    this.deliver(buildPraiseLine(loadSettings().userName || 'friend', this.rotation++))
   }
 
   private deliver(line: string): void {

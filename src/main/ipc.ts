@@ -3,7 +3,7 @@ import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
 import { tasksRepo } from './db'
-import { saveSettings } from './settings'
+import { loadSettings, saveSettings } from './settings'
 import { parseTaskLines } from '@shared/parser'
 import { IPC, type ModelFile, type Task } from '@shared/types'
 import type { Scheduler } from './scheduler'
@@ -16,6 +16,7 @@ const AddTextSchema = z.string().min(1).max(10_000)
 const IdSchema = z.number().int().positive()
 const BoolSchema = z.boolean()
 const DragDeltaSchema = z.number().finite().min(-20_000).max(20_000)
+const NameSchema = z.string().trim().min(1).max(60)
 
 function assetsDir(): string {
   return app.isPackaged
@@ -92,6 +93,12 @@ export function registerIpc({ getWindow, scheduler, onPopoverChange, onDragStart
     if (!win) return
     const [x, y] = win.getPosition()
     saveSettings({ x, y })
+  })
+
+  ipcMain.handle(IPC.settingsGetUserName, (): string => loadSettings().userName)
+
+  ipcMain.handle(IPC.settingsSetUserName, (_e, raw: unknown): void => {
+    saveSettings({ userName: NameSchema.parse(raw) })
   })
 
   ipcMain.handle(IPC.modelRead, (): ModelFile[] => {

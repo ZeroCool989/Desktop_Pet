@@ -23,6 +23,8 @@ const api: PantherApi = {
   dragTo: (dx: number, dy: number) => ipcRenderer.send(IPC.dragMove, dx, dy),
   endDrag: () => ipcRenderer.send(IPC.dragEnd),
   readModels: () => ipcRenderer.invoke(IPC.modelRead),
+  getUserName: () => ipcRenderer.invoke(IPC.settingsGetUserName),
+  setUserName: (name: string) => ipcRenderer.invoke(IPC.settingsSetUserName, name),
   onNag: (cb: (e: NagEvent) => void) => subscribe(IPC.evNag, cb),
   onTogglePopover: (cb: () => void) => subscribe(IPC.evTogglePopover, cb),
   onCursor: (cb: (e: CursorEvent) => void) => subscribe(IPC.evCursor, cb),
